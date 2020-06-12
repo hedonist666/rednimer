@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "node mane.js"
+    "start": "node mane.js"
   },
   "keywords": [],
   "author": "",
