@@ -3,6 +3,7 @@ const tg = require('node-telegram-bot-api')
 const token = '1173021450:AAF8K0w7XrJ-z-KYUlO442iu-qeZ9W6ITE0'
 
 const help = `
+/single text @ YYYY-MM-DD:hours:minutes:seconds ; set single remind
 /text %txt% ;send you message to remind;
 /interval xx:yy:zz ;set interval
 /list; list reminders
@@ -19,7 +20,7 @@ let last_txt = {}
 
 const parseTime = (txt) => {
     let [hours, mins, secs] = txt.split(':').map(e => {return parseInt(e)})
-    let res = secs + mins*60 + hours*360
+    let res = secs + mins*60 + hours*3600
     console.log(`parsed ${txt} with ${res}`)
     return res
 }
@@ -118,6 +119,33 @@ bot.onText(/\/start/, (msg) => {
     console.log(`start called from ${id}`)
     was[id] = true
     bot.sendMessage(id, help)
+})
+
+bot.onText(/\/single (.+)/, (msg) => {
+    const id = msg.chat.id;
+    console.log(`start called from ${id}`)
+    was[id] = true
+    let [txt, date] = match[1].split('@');
+    date = Date.parse(date)
+    if (!date) {
+        bot.sendMessage(id, 'unable to resolve date value.')
+        return
+    }
+    let interval = date - Date.now()
+    if (interval < 0) {
+        bot.sendMessage(id, 'you probably should write date in the future except the case you can travel in the past.')
+        return
+    }
+
+    let elem = (txt) => {
+        bot.sendMessage(id, txt);
+    }
+
+    elem.int = interval
+    elem.txt = txt
+
+    setTimeout(elem, elem.int, elem.txt)
+    bot.sendMessage(id, `alright, ya have ${interval} seconds.`)
 })
 
 bot.on('message', (msg) => {
