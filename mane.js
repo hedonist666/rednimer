@@ -1,3 +1,14 @@
+//little stub to make work in heroku
+
+
+const http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.send('it is running\n');
+}).listen(process.env.PORT || 5000);
+
+
+
 process.env.NTBA_FIX_319 = 1;
 const tg = require('node-telegram-bot-api')
 const token = '1173021450:AAF8K0w7XrJ-z-KYUlO442iu-qeZ9W6ITE0'
@@ -35,7 +46,6 @@ const createReminder = (id) => {
     last_txt[id] = undefined
     last_int[id] = undefined
 
-    console.log(last_int[id])
     elem.intId = setInterval(elem, elem.int*1000, elem.txt)
 
     if (!rems[id]) {
