@@ -7,7 +7,11 @@ http.createServer(function (req, res) {
     res.end('it is running\n');
 }).listen(process.env.PORT || 5000);
 
+const reload = () => {
+    http.get(`localhost:${process.env.PORT || 5000}`, (resp) => {})
+}
 
+setInterval(reload, 30*60*1000)
 
 process.env.NTBA_FIX_319 = 1;
 const tg = require('node-telegram-bot-api')
