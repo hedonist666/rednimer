@@ -8,7 +8,7 @@ http.createServer(function (req, res) {
 }).listen(process.env.PORT || 5000);
 
 const reload = () => {
-    http.get(`localhost:${process.env.PORT || 5000}`, (resp) => {})
+    http.get(`http://localhost:${process.env.PORT || 5000}`, (resp) => {})
 }
 
 setInterval(reload, 30*60*1000)
