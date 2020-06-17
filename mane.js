@@ -12,7 +12,7 @@ const reload = () => {
     http.get(`http://rednimer.herokuapp.com/`, (resp) => {})
 }
 
-setInterval(reload, 30*60*1000)
+setInterval(reload, 5*60*1000)
 
 process.env.NTBA_FIX_319 = 1;
 const tg = require('node-telegram-bot-api')
